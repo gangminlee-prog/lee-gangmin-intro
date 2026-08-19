@@ -7,175 +7,340 @@
 <style>
   :root {
     --teal: #5cd3e8;
+    --teal-deep: #2ba9c4;
     --teal-soft: #eafbfd;
     --teal-mid: #b8ecf3;
     --navy: #26424d;
     --navy-deep: #1b2f38;
     --text: #1b2f38;
     --sub: #4d6672;
+    --line: rgba(38, 66, 77, 0.15);
+    --maxw: 880px;
   }
   * { box-sizing: border-box; }
-  html, body {
-    margin: 0;
-    min-height: 100%;
-  }
+  html { scroll-behavior: smooth; }
   body {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
     color: var(--text);
-    padding: 40px 20px;
-    position: relative;
-    overflow-x: hidden;
+    background: var(--teal-soft);
+    line-height: 1.65;
+  }
+
+  /* ---------- 상단 내비게이션 ---------- */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--navy-deep);
+    border-bottom: 3px solid var(--teal);
+  }
+  .nav-inner {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .brand {
+    font-size: 17px;
+    font-weight: 900;
+    color: var(--teal);
+    -webkit-text-stroke: 0.5px #0e1c22;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+  }
+  .nav-links {
+    display: flex;
+    gap: 22px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex-wrap: wrap;
+  }
+  .nav-links a {
+    color: #cdeef5;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 4px 2px;
+    border-bottom: 2px solid transparent;
+  }
+  .nav-links a:hover,
+  .nav-links a:focus-visible {
+    color: var(--teal);
+    border-bottom-color: var(--teal);
+  }
+
+  /* ---------- 히어로 ---------- */
+  .hero {
     background:
-      radial-gradient(circle at 20% 15%, rgba(255,255,255,0.35), transparent 40%),
-      linear-gradient(160deg, var(--navy-deep) 0%, var(--navy) 45%, var(--teal) 130%);
-  }
-  .deco {
-    position: fixed;
-    font-size: 26px;
-    opacity: 0.55;
-    filter: drop-shadow(0 2px 3px rgba(0,0,0,0.25));
-  }
-  .card {
-    position: relative;
-    background: linear-gradient(160deg, var(--teal-soft) 0%, var(--teal-mid) 100%);
-    border: 4px solid var(--navy);
-    border-radius: 22px;
-    padding: 44px 36px;
-    max-width: 420px;
-    width: 100%;
-    box-shadow: 0 12px 36px rgba(0,0,0,0.35);
+      radial-gradient(circle at 78% 22%, rgba(92,211,232,0.45), transparent 55%),
+      linear-gradient(160deg, var(--navy-deep) 0%, var(--navy) 55%, #35707f 100%);
+    color: #fff;
+    padding: 68px 24px 76px;
     text-align: center;
-    z-index: 2;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 -1px 0;
+    height: 26px;
+    background: var(--teal-soft);
+    clip-path: polygon(0 100%, 0 40%, 12% 62%, 26% 30%, 42% 66%, 58% 26%, 74% 60%, 88% 32%, 100% 58%, 100% 100%);
+    opacity: 0.95;
   }
   .avatar {
-    width: 88px;
-    height: 88px;
+    width: 104px;
+    height: 104px;
     border-radius: 50%;
     background: var(--teal);
     color: var(--navy-deep);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 32px;
+    font-size: 40px;
     font-weight: 900;
-    margin: 0 auto 20px;
-    border: 4px solid var(--navy);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    margin: 0 auto 22px;
+    border: 5px solid #0e1c22;
+    box-shadow: 0 8px 22px rgba(0,0,0,0.35);
   }
-  h1 {
-    margin: 0 0 4px;
-    font-size: 30px;
+  .hero h1 {
+    margin: 0 0 8px;
+    font-size: clamp(30px, 6vw, 44px);
     font-weight: 900;
     color: var(--teal);
-    -webkit-text-stroke: 1.5px var(--navy);
-    text-stroke: 1.5px var(--navy);
+    -webkit-text-stroke: 2px #0e1c22;
     letter-spacing: 0.01em;
   }
-  .dept {
-    color: var(--navy);
+  .hero .dept {
+    margin: 0 0 22px;
     font-size: 15px;
     font-weight: 800;
-    letter-spacing: 0.02em;
-    margin-bottom: 22px;
+    color: #d6f4fa;
+    letter-spacing: 0.04em;
   }
   .tagline {
-    font-size: 16px;
-    font-weight: 800;
-    color: var(--teal);
-    -webkit-text-stroke: 0.6px var(--navy);
-    background: var(--navy);
-    border-radius: 10px;
-    padding: 11px 16px;
-    margin-bottom: 26px;
-    letter-spacing: 0.01em;
+    display: inline-block;
+    background: var(--teal);
+    color: var(--navy-deep);
+    font-size: clamp(16px, 3vw, 20px);
+    font-weight: 900;
+    padding: 12px 28px;
+    border-radius: 999px;
+    border: 3px solid #0e1c22;
+    box-shadow: 0 6px 0 #0e1c22;
   }
-  .section-title {
-    font-size: 13px;
+
+  /* ---------- 섹션 공통 ---------- */
+  main { max-width: var(--maxw); margin: 0 auto; padding: 8px 24px 0; }
+  section { padding: 52px 0; border-bottom: 1px solid var(--line); }
+  section:last-of-type { border-bottom: none; }
+  .eyebrow {
+    font-size: 12px;
     font-weight: 800;
-    color: var(--navy);
-    letter-spacing: 0.06em;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-    margin-bottom: 12px;
-    text-align: left;
+    color: var(--teal-deep);
+    margin: 0 0 6px;
   }
+  h2 {
+    margin: 0 0 20px;
+    font-size: clamp(22px, 4vw, 27px);
+    font-weight: 900;
+    color: var(--navy-deep);
+  }
+  h2::after {
+    content: "";
+    display: block;
+    width: 52px;
+    height: 5px;
+    margin-top: 10px;
+    background: var(--teal);
+    border-radius: 3px;
+  }
+
+  /* ---------- 소개 ---------- */
+  .about-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+  }
+  .info-card {
+    background: #fff;
+    border: 2px solid var(--navy);
+    border-radius: 14px;
+    padding: 20px 22px;
+    box-shadow: 0 4px 0 var(--navy);
+  }
+  .info-card .k {
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--teal-deep);
+    margin-bottom: 4px;
+  }
+  .info-card .v {
+    font-size: 17px;
+    font-weight: 800;
+    color: var(--navy-deep);
+  }
+
+  /* ---------- 좋아하는 것 ---------- */
   .likes {
     list-style: none;
     padding: 0;
-    margin: 0 0 8px;
-    text-align: left;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    margin: 0;
+    display: grid;
+    gap: 14px;
   }
   .likes li {
     display: flex;
     align-items: center;
-    gap: 12px;
-    font-size: 15.5px;
-    font-weight: 700;
-    color: var(--text);
-    padding: 13px 16px;
+    gap: 16px;
     background: linear-gradient(135deg, #ffffff, var(--teal-soft));
     border: 2px solid var(--navy);
-    border-radius: 10px;
+    border-radius: 14px;
+    padding: 18px 20px;
+    box-shadow: 0 4px 0 var(--navy);
+    font-size: 17px;
+    font-weight: 800;
   }
   .likes .num {
-    font-weight: 900;
-    color: var(--navy-deep);
-    background: var(--teal);
-    min-width: 22px;
-    height: 22px;
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
     border-radius: 50%;
+    background: var(--teal);
+    border: 2px solid var(--navy);
+    color: var(--navy-deep);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 12px;
-    flex-shrink: 0;
-    border: 1.5px solid var(--navy);
+    font-size: 15px;
+    font-weight: 900;
   }
   .likes li.fromis {
-    background: linear-gradient(135deg, #d8f2f6, #7fd4e6);
+    background: linear-gradient(135deg, var(--teal-mid), #7fd4e6);
     border-width: 3px;
-    box-shadow: 0 0 0 3px rgba(92, 211, 232, 0.35);
   }
   .likes li.fromis .label {
-    font-weight: 900;
     color: var(--teal);
-    -webkit-text-stroke: 1px var(--navy);
-    text-stroke: 1px var(--navy);
+    -webkit-text-stroke: 1.5px var(--navy-deep);
+    font-weight: 900;
+    font-size: 19px;
     letter-spacing: 0.02em;
   }
-  footer {
-    margin-top: 28px;
-    font-size: 12px;
+  .likes .note {
+    margin-left: auto;
+    font-size: 13px;
+    font-weight: 700;
     color: var(--sub);
+    white-space: nowrap;
+  }
+
+  /* ---------- 푸터 ---------- */
+  footer {
+    background: var(--navy-deep);
+    color: #a9cfd9;
+    text-align: center;
+    padding: 30px 24px;
+    font-size: 13px;
+    border-top: 3px solid var(--teal);
+    margin-top: 20px;
+  }
+  footer strong { color: var(--teal); }
+
+  @media (max-width: 560px) {
+    .nav-inner { flex-direction: column; align-items: flex-start; gap: 10px; }
+    .nav-links { gap: 16px; }
+    .likes .note { display: none; }
   }
 </style>
 </head>
 <body>
-  <div class="deco" style="left:8%; top:12%;">💙</div>
-  <div class="deco" style="right:9%; top:18%;">💙</div>
-  <div class="deco" style="left:10%; bottom:10%;">💙</div>
-  <div class="deco" style="right:8%; bottom:12%;">💙</div>
 
-  <div class="card">
+  <nav class="nav">
+    <div class="nav-inner">
+      <div class="brand">이강민 💙</div>
+      <ul class="nav-links">
+        <li><a href="#about">소개</a></li>
+        <li><a href="#likes">좋아하는 것</a></li>
+        <li><a href="#hello">인사</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header class="hero">
     <div class="avatar">강</div>
     <h1>이강민</h1>
-    <div class="dept">SCM팀 · 자재파트</div>
+    <p class="dept">SCM팀 · 자재파트</p>
     <div class="tagline">스윗 스윗 화이팅!</div>
+  </header>
 
-    <div class="section-title">좋아하는 것</div>
-    <ul class="likes">
-      <li class="fromis"><span class="num">1</span> <span class="label">프로미스나인</span> 💙</li>
-      <li><span class="num">2</span> 고민중독 부르기</li>
-      <li><span class="num">3</span> 스윗밸런스랩 자랑하기</li>
-    </ul>
+  <main>
+    <section id="about">
+      <p class="eyebrow">About</p>
+      <h2>소개</h2>
+      <div class="about-grid">
+        <div class="info-card">
+          <div class="k">이름</div>
+          <div class="v">이강민</div>
+        </div>
+        <div class="info-card">
+          <div class="k">소속</div>
+          <div class="v">SCM팀 자재파트</div>
+        </div>
+        <div class="info-card">
+          <div class="k">한 줄 소개</div>
+          <div class="v">스윗 스윗 화이팅!</div>
+        </div>
+      </div>
+    </section>
 
-    <footer>Made with GitHub Pages</footer>
-  </div>
+    <section id="likes">
+      <p class="eyebrow">Favorites</p>
+      <h2>좋아하는 것</h2>
+      <ul class="likes">
+        <li class="fromis">
+          <span class="num">1</span>
+          <span class="label">프로미스나인</span>
+          <span class="note">💙 최애</span>
+        </li>
+        <li>
+          <span class="num">2</span>
+          <span>고민중독 부르기</span>
+          <span class="note">🎤 애창곡</span>
+        </li>
+        <li>
+          <span class="num">3</span>
+          <span>스윗밸런스랩 자랑하기</span>
+          <span class="note">📣 특기</span>
+        </li>
+      </ul>
+    </section>
+
+    <section id="hello">
+      <p class="eyebrow">Hello</p>
+      <h2>인사</h2>
+      <div class="info-card">
+        <div class="v" style="font-weight:700; font-size:16px; line-height:1.8;">
+          안녕하세요, SCM팀 자재파트 이강민입니다.<br>
+          첫 홈페이지를 GitHub Pages로 직접 만들어 올렸습니다.<br>
+          앞으로도 스윗 스윗 화이팅! 💙
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <strong>이강민</strong> · SCM팀 자재파트 &nbsp;|&nbsp; Made with GitHub Pages
+  </footer>
+
 </body>
 </html>
